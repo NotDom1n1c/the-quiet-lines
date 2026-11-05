@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Quiet Lines</title>
+<meta name="description" content="A metal plate, made to sing. Sand gathers where the metal stays still.">
+<meta name="theme-color" content="#f7f6f2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+Double+Pica:ital@0;1&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f7f6f2;
+    --ink: #141311;
+    --soft: #5c5850;
+    --rule: #c9c6bd;
+    --plate-size: 100vh;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--paper); color: var(--ink); }
+  body { font-family: "IM Fell English", Georgia, "Times New Roman", serif; overflow: hidden; }
+
+  /* A page from a book of experiments: the text column is paper, the plate is the only object on it. */
+  .sheet { display: grid; grid-template-columns: minmax(0, 1fr) var(--plate-size); height: 100vh; }
+
+  .col {
+    display: flex; flex-direction: column; min-height: 0; overflow-y: auto;
+    padding: clamp(22px, 4.4vh, 52px) clamp(24px, 3.6vw, 64px);
+  }
+  .tab { font-family: "IM Fell English SC", Georgia, serif; font-size: 16px; letter-spacing: .06em; color: var(--soft); margin: 0; }
+  h1 {
+    font-family: "IM Fell Double Pica", Georgia, serif; font-style: italic; font-weight: 400;
+    font-size: clamp(46px, 7.4vh, 92px); line-height: .98; letter-spacing: -.012em; margin: 6px 0 clamp(12px, 2.2vh, 24px);
+  }
+  .lede { margin: 0; max-width: 31em; font-size: clamp(17px, 2.2vh, 21px); line-height: 1.34; }
+  .credit { margin: 8px 0 0; font-style: italic; font-size: 15.5px; color: var(--soft); }
+
+  .figures { margin-top: auto; padding-top: clamp(14px, 2.6vh, 30px); }
+  .now {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 16px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--ink);
+  }
+  .now b { font-family: "IM Fell Double Pica", Georgia, serif; font-weight: 400; font-size: 25px; }
+  .now span { font-size: 16.5px; color: var(--soft); font-feature-settings: "onum"; }
+
+  .grid {
+    display: grid; grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 0; margin: 0; padding: 0; list-style: none;
+    max-width: min(100%, calc((100vh - 372px) * 1.5));
+    border-left: 1px solid var(--rule);
+  }
+  .grid button {
+    display: block; width: 100%; aspect-ratio: 1; padding: 11%; margin: 0;
+    background: none; border: 0; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+    cursor: pointer; transition: background .25s;
+  }
+  .grid canvas { display: block; width: 100%; height: 100%; transition: filter .25s; }
+  .grid button:hover { background: #e9e7df; }
+  .grid button:focus-visible, .acts button:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
+  .grid button[aria-current="true"] { background: #111; }
+  .grid button[aria-current="true"] canvas { filter: invert(1); }
+
+  .acts { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 18px; margin-top: 10px; }
+  .acts .hint { font-style: italic; font-size: 15.5px; color: var(--soft); }
+  .acts div { display: flex; gap: 16px; }
+  .acts button {
+    appearance: none; background: none; border: 0; padding: 4px 0; font: inherit; font-size: 16px; color: var(--ink); cursor: pointer;
+    text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px;
+  }
+  .acts button:hover { text-decoration-thickness: 2px; }
+  .acts button[hidden] { display: none; }
+
+  .plate-wrap { position: relative; align-self: center; width: var(--plate-size); height: var(--plate-size); }
+  #plate {
+    position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: crosshair;
+    box-shadow: -14px 0 34px -14px rgba(20, 18, 12, .5);
+  }
+
+  .nogl { position: absolute; inset: 0; display: none; place-items: center; padding: 10%; text-align: center; font-style: italic; }
+  body.nogl .nogl { display: grid; }
+
+  /* Narrow or portrait: the plate goes first, full width, and the page scrolls. */
+  @media (max-width: 760px), (max-aspect-ratio: 11/10) {
+    body { overflow: auto; }
+    .sheet { display: flex; flex-direction: column-reverse; height: auto; }
+    .plate-wrap { width: 100%; height: auto; aspect-ratio: 1; align-self: stretch; }
+    #plate { box-shadow: 0 12px 30px -14px rgba(20, 18, 12, .5); }
+    .col { overflow: visible; }
+    .figures { margin-top: 18px; }
+    .grid { max-width: none; }
+  }
+</style>
+</head>
+<body>
+<main class="sheet">
+  <section class="col">
+    <p class="tab">Tab. I</p>
+    <h1>The Quiet Lines</h1>
+    <p class="lede">A metal plate, made to sing. Sand leaps away from everything that moves and gathers where the metal stays still.</p>
+    <p class="credit">After Ernst Chladni, 1787.</p>
+
+    <div class="figures">
+      <p class="now" aria-live="off"><b id="fig">Fig. 1</b><span id="modes"></span><span id="hz"></span></p>
+      <div class="grid" id="grid" role="group" aria-label="Figures"></div>
+      <div class="acts">
+        <span class="hint">Press the plate: your finger makes a still point.</span>
+        <div>
+          <button id="auto" hidden>Let it play</button>
+          <button id="metal">Steel plate</button>
+          <button id="sound" aria-pressed="false">Sound off</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="plate-wrap">
+    <canvas id="plate" role="img" aria-label="A vibrating metal plate. Sand on it collects along the lines that do not move."></canvas>
+    <p class="nogl">This plate needs WebGL 2.</p>
+  </div>
+</main>
+<script src="app.js?v=8"></script>
+</body>
+</html>
